@@ -1,0 +1,20 @@
+<script>
+const links = [
+  "https://wa.me/8618396503253", 
+  "https://wa.me/8618159028424", 
+  "https://wa.me/8618050517014"
+];
+
+// 从 localStorage 读取当前索引，没有则从 0 开始
+let index = parseInt(localStorage.getItem("jumpIndex") || "0");
+
+// 获取当前要跳转的 URL
+const targetUrl = links[index];
+
+// 计算下次的索引并存入 localStorage
+const nextIndex = (index + 1) % links.length;
+localStorage.setItem("jumpIndex", nextIndex);
+
+// 执行跳转
+window.location.href = targetUrl;
+</script>
