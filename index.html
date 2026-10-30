@@ -1,314 +1,1921 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Luxury Products Landing Page</title>
-
-<!-- Facebook Pixel -->
-<script>
-!function(f,b,e,v,n,t,s)
-{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
-n.callMethod.apply(n,arguments):n.queue.push(arguments)};
-if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
-n.queue=[];t=b.createElement(e);t.async=!0;
-t.src=v;s=b.getElementsByTagName(e)[0];
-s.parentNode.insertBefore(t,s)}(window, document,'script',
-'https://connect.facebook.net/en_US/fbevents.js');
-
-fbq('init', '853640044397925');
-fbq('track', 'PageView');
-</script>
-<noscript>
-<img height="1" width="1" style="display:none"
-src="https://www.facebook.com/tr?id=853640044397925&ev=PageView&noscript=1"/>
-</noscript>
-
-<style>
-/* === 保留原有样式 === */
-body{font-family:'Arial',sans-serif;background:#fff;color:#111;margin:0;padding:0;}
-.container{max-width:1000px;margin:0 auto;background:#fff;border-radius:12px;padding:20px 30px;box-shadow:0 4px 12px rgba(0,0,0,0.05);}
-h1,h2,h3{color:#FFD700;}p{color:#333;line-height:1.6;}
-.wa-button-wrap{display:flex;align-items:center;gap:10px;margin-top:10px;}
-.wa-button-wrap button{background:#25D366;color:white;border:none;padding:12px 25px;border-radius:10px;font-weight:bold;cursor:pointer;transition:0.3s;box-shadow:0 4px 12px rgba(0,0,0,0.1);}
-.wa-button-wrap button:hover{background:#1ebe5d;}
-#waBadge{background:#FFD700;color:#111;padding:4px 10px;border-radius:12px;font-size:13px;font-weight:bold;box-shadow:0 2px 6px rgba(0,0,0,0.1);}
-
-/* === 产品区样式（新设计） === */
-.product-gallery {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 30px;
-  margin: 30px 0;
-}
-
-.product-card {
-  position: relative;
-  overflow: hidden;
-  border-radius: 16px;
-  cursor: pointer;
-  transition: transform 0.4s, box-shadow 0.4s;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.1);
-}
-
-.product-card img {
-  width: 100%;
-  display: block;
-  border-radius: 16px;
-  transition: transform 0.4s, filter 0.4s;
-}
-
-.product-card:hover img {
-  transform: scale(1.08) rotate(1deg);
-  filter: brightness(1.12);
-}
-
-.product-info {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  padding: 15px 20px;
-  background: linear-gradient(0deg, rgba(0,0,0,0.75), transparent);
-  color: #fff;
-  text-align: left;
-  transition: transform 0.4s;
-}
-
-.product-card:hover .product-info {
-  transform: translateY(-10px);
-}
-
-.product-info h3 {
-  margin: 0;
-  font-size: 18px;
-  font-weight: bold;
-}
-
-.wa-card-btn {
-  display: block;
-  background: #25D366;
-  color: #fff;
-  border: none;
-  padding: 10px 18px;
-  border-radius: 12px;
-  font-weight: bold;
-  cursor: pointer;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
-  opacity: 0;
-  transform: translateY(20px);
-  transition: opacity 0.3s, transform 0.3s;
-}
-
-.product-card:hover .wa-card-btn {
-  opacity: 1;
-  transform: translateY(0);
-}
-
-.wa-card-btn:hover {
-  background: #1ebe5d;
-}
-
-.product-card:hover {
-  transform: translateY(-12px) scale(1.05) rotate(1deg);
-  box-shadow: 0 12px 30px rgba(0,0,0,0.2), 0 0 20px rgba(255,215,0,0.4);
-}
-
-/* 博客区样式 */
-.blog-left-right{display:flex;gap:20px;margin:40px 0;align-items:center;background:#fff;padding:20px;border-radius:12px;box-shadow:0 4px 12px rgba(0,0,0,0.05);}
-.blog-left-right img{width:350px;border-radius:12px;transition: transform 0.5s, filter 0.5s;}
-.blog-left-right img:hover{transform:scale(1.05) rotate(1deg); filter:brightness(1.05);}
-.blog-text{flex:1;text-align:left;}
-.blog-text h3{margin-top:0;color:#FFD700;}
-.blog-text p{color:#333;font-size:15px;}
-.blog-text button.cta-btn{background:#FFD700;color:#111;font-weight:bold;margin-top:10px;border-radius:8px;padding:10px 18px;box-shadow:0 2px 8px rgba(0,0,0,0.1);}
-.blog-text button.cta-btn:hover{background:#ffbf00;}
-
-/* 信息区和客户评价 */
-.info-section, .testimonials-container{background:#f5f5f5;border-radius:12px;padding:20px;box-shadow:0 4px 12px rgba(0,0,0,0.03);}
-#floatWA{position:fixed;bottom:20px;right:20px;width:60px;height:60px;background:#25D366;border-radius:50%;display:flex;align-items:center;justify-content:center;cursor:pointer;z-index:999;animation:float 2s infinite;}
-#floatWA img{width:35px;height:35px;}
-@keyframes float{0%,100%{transform:translateY(0);}50%{transform:translateY(-8px);}}
-
-/* Testimonials */
-.testimonials-track{display:flex;transition:transform 0.4s ease;}
-.testimonial-card{flex:0 0 80%;margin-right:15px;background:#fff;border-radius:15px;box-shadow:0 4px 12px rgba(0,0,0,0.05);padding:15px;text-align:left;display:flex;align-items:center;gap:15px;}
-.testimonial-avatar{width:60px;height:60px;border-radius:50%;color:#fff;font-weight:bold;font-size:24px;display:flex;align-items:center;justify-content:center;flex-shrink:0;}
-.testimonial-card p{margin:0;font-size:14px;color:#333;}
-.testimonials-controls{text-align:center;margin-top:10px;}
-.testimonials-controls button{background:#FFD700;color:#111;border:none;padding:5px 12px;margin:0 5px;border-radius:8px;cursor:pointer;}
-.testimonials-controls button:hover{background:#ffbf00;}
-
-/* 手机端响应式 */
-@media(max-width:768px){
-  .blog-left-right{flex-direction:column;}
-  .blog-left-right img{width:100%;}
-  .product-gallery{grid-template-columns:1fr;}
-  .testimonial-card{flex:0 0 90%;}
-}
+<html lang="zh-CN" class="translated-ltr"><head><style>body {transition: opacity ease-in 0.2s; } 
+body[unresolved] {opacity: 0; display: block; overflow: hidden; position: relative; } 
 </style>
-</head>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Master-Class Top-Tier Atelier | 100% Zero-Risk</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;0,700;1,400&amp;family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+<script src="https://connect.facebook.net/signals/config/1303387931707269?v=2.9.281&amp;r=stable&amp;domain=luxurylineshopping.shop&amp;hme=7561e8db2489737df4c74b634c943d82cefbf4e67acc7fda2493ff919471f0aa&amp;ex_m=101%2C194%2C143%2C22%2C69%2C70%2C136%2C65%2C64%2C11%2C151%2C87%2C16%2C130%2C123%2C72%2C75%2C129%2C148%2C153%2C8%2C4%2C5%2C7%2C6%2C3%2C88%2C98%2C154%2C159%2C208%2C59%2C175%2C176%2C52%2C264%2C30%2C71%2C220%2C219%2C218%2C23%2C32%2C100%2C58%2C10%2C60%2C94%2C95%2C96%2C102%2C126%2C31%2C29%2C128%2C125%2C124%2C144%2C73%2C147%2C145%2C146%2C47%2C57%2C119%2C15%2C150%2C42%2C251%2C252%2C250%2C26%2C27%2C28%2C45%2C137%2C74%2C109%2C18%2C20%2C41%2C37%2C39%2C38%2C80%2C89%2C93%2C107%2C135%2C138%2C43%2C108%2C24%2C21%2C115%2C66%2C35%2C140%2C139%2C141%2C132%2C131%2C25%2C34%2C56%2C106%2C149%2C67%2C17%2C142%2C111%2C78%2C63%2C19%2C82%2C83%2C112%2C81%2C33%2C280%2C201%2C190%2C191%2C189%2C283%2C275%2C49%2C202%2C104%2C127%2C77%2C117%2C51%2C44%2C46%2C110%2C116%2C122%2C55%2C61%2C50%2C53%2C97%2C152%2C1%2C120%2C14%2C118%2C12%2C2%2C54%2C90%2C62%2C114%2C86%2C85%2C155%2C156%2C91%2C92%2C9%2C121%2C99%2C48%2C133%2C84%2C76%2C68%2C113%2C103%2C40%2C134%2C0%2C79%2C36%2C105%2C13%2C157" async=""></script><script async="" src="https://connect.facebook.net/en_US/fbevents.js"></script><script>
+    !function(f,b,e,v,n,t,s)
+    {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+    n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+    if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+    n.queue=[];t=b.createElement(e);t.async=!0;
+    t.src=v;s=b.getElementsByTagName(e)[0];
+    s.parentNode.insertBefore(t,s)}(window, document,'script',
+    'https://connect.facebook.net/en_US/fbevents.js');
+    
+    // 初始化基础代码，触发 PageView
+    fbq('init', '1303387931707269'); 
+    fbq('track', 'PageView');
+    </script>
+    <noscript><img height="1" width="1" style="display:none"
+    src="https://www.facebook.com/tr?id=1303387931707269&ev=PageView&noscript=1"
+    /></noscript>
+    
+    <style>
+        /* CSS Variables */
+        :root {
+            --black: #0a0a0a;
+            --white: #ffffff;
+            --gray-light: #f5f5f5;
+            --gray-dark: #333333;
+            --gold: #c5a059;
+            --font-serif: 'Cormorant Garamond', serif;
+            --font-sans: 'Inter', sans-serif;
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        /* Base & Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--black);
+            line-height: 1.6;
+            overflow-x: hidden;
+            background: var(--white);
+        }
+
+        h1,
+        h2,
+        h3,
+        h4,
+        h5,
+        h6 {
+            font-family: var(--font-serif);
+            font-weight: 600;
+            line-height: 1.2;
+        }
+
+        h4 {
+            font-size: 1.8rem;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        img,
+        video {
+            max-width: 100%;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* Utility Classes */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .text-center {
+            text-align: center;
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        .bg-dark {
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .bg-gray {
+            background: var(--gray-light);
+        }
+
+        .gold-text {
+            color: var(--gold);
+        }
+
+        /* Animations */
+        .fade-in-up {
+            opacity: 0;
+            transform: translateY(40px);
+            transition: 0.8s ease-out;
+        }
+
+        .fade-in-up.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 16px 32px;
+            font-size: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: var(--transition);
+            border-radius: 2px;
+        }
+
+        .btn-gold {
+            background: var(--gold);
+            color: var(--white);
+            border: 1px solid var(--gold);
+        }
+
+        .btn-gold:hover {
+            background: transparent;
+            color: var(--gold);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--white);
+            color: var(--white);
+        }
+
+        .btn-outline:hover {
+            background: var(--white);
+            color: var(--black);
+        }
+
+        .btn-breathe {
+            animation: breathe 2s infinite ease-in-out;
+        }
+
+        @keyframes breathe {
+
+            0%,
+            100% {
+                box-shadow: 0 0 10px rgba(197, 160, 89, 0.3);
+                transform: scale(1);
+            }
+
+            50% {
+                box-shadow: 0 0 25px rgba(197, 160, 89, 0.7);
+                transform: scale(1.02);
+            }
+        }
+
+        /* Top Bar & Nav */
+        .top-bar {
+            background: var(--black);
+            color: var(--white);
+            text-align: center;
+            padding: 8px 15px;
+            font-size: 12px;
+            font-weight: 300;
+            letter-spacing: 0.5px;
+            z-index: 100;
+            position: relative;
+        }
+
+        .navbar {
+            position: fixed;
+            top: 34px;
+            width: 100%;
+            padding: 20px 0;
+            z-index: 99;
+            transition: var(--transition);
+        }
+
+        .navbar.scrolled {
+            background: rgba(255, 255, 255, 0.95);
+            backdrop-filter: blur(10px);
+            padding: 15px 0;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+            top: 0;
+        }
+
+        .navbar.scrolled .logo {
+            color: var(--black);
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('assets/bg3.png') center/cover;
+            display: flex;
+            align-items: center;
+            text-align: center;
+            color: var(--white);
+        }
+
+        .hero h1 {
+            font-size: clamp(2.5rem, 5vw, 4.5rem);
+            margin-bottom: 20px;
+            text-transform: capitalize;
+        }
+
+        .hero .sub-headline {
+            font-size: clamp(1rem, 2vw, 1.25rem);
+            max-width: 800px;
+            margin: 0 auto 40px;
+            font-weight: 300;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        /* Z-Pattern Strengths */
+        .z-row {
+            display: flex;
+            align-items: center;
+            gap: 60px;
+            margin-bottom: 80px;
+        }
+
+        .z-row:nth-child(even) {
+            flex-direction: row-reverse;
+        }
+
+        .z-content {
+            flex: 1;
+        }
+
+        .z-content h3 {
+            font-size: 2rem;
+            margin-bottom: 15px;
+        }
+
+        .z-content p {
+            color: var(--gray-dark);
+        }
+
+        .z-media {
+            flex: 1;
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+        }
+
+        .z-media video,
+        .z-media img {
+            width: 100%;
+            aspect-ratio: 4/3;
+            object-fit: cover;
+            transition: transform 0.7s;
+        }
+
+        .z-media:hover video,
+        .z-media:hover img {
+            transform: scale(1.05);
+        }
+
+        /* High Contrast */
+        #contrast {
+            padding-left: 0;
+            padding-right: 0;
+        }
+
+        #contrast .container {
+            max-width: 100%;
+            padding: 0 24px;
+            /* Keep side padding for content */
+        }
+
+        #contrast .contrast-grid {
+            max-width: 100%;
+            /* Optional: limit grid max width */
+            margin: 0 auto;
+            padding: 0 24px;
+        }
+
+        .container-full {
+            width: 100%;
+            max-width: 100%;
+            padding: 0 24px;
+        }
+
+        .contrast-grid-full {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            width: 100%;
+            max-width: 100%;
+        }
+
+        .contrast-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .contrast-card {
+            background: var(--gray-light);
+            padding: 0px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .contrast-img-wrapper {
+            overflow: hidden;
+            margin-bottom: 20px;
+            position: relative;
+            cursor: zoom-in;
+        }
+
+        .contrast-img-wrapper img {
+            transition: transform 0.4s;
+        }
+
+        .contrast-img-wrapper:hover img {
+            transform: scale(1.15);
+        }
+
+        .contrast-card h4 {
+            margin-bottom: 10px;
+            font-size: 1.2rem;
+        }
+
+        .contrast-card p {
+            font-size: 0.9rem;
+            color: #555;
+        }
+
+        /* Comparison Table (Web3 Style) */
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 40px;
+            color: var(--white);
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .comparison-table th {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+        }
+
+        .comparison-table td:first-child {
+            text-align: left;
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+        }
+
+        .col-us {
+            background: rgba(197, 160, 89, 0.1);
+            border: 1px solid var(--gold);
+            box-shadow: 0 0 20px rgba(197, 160, 89, 0.2);
+            position: relative;
+        }
+
+        .col-them {
+            opacity: 0.5;
+        }
+
+        .comparison-table th:first-child,
+        .comparison-table td:first-child {
+            width: 20%;
+            min-width: 150px;
+            max-width: 250px;
+        }
+
+        .comparison-table th:nth-child(2),
+        .comparison-table td:nth-child(2),
+        .comparison-table th:nth-child(3),
+        .comparison-table td:nth-child(3) {
+            width: 40%;
+        }
+
+        @media (max-width: 768px) {
+
+            .comparison-table th:first-child,
+            .comparison-table td:first-child {
+                width: 30%;
+                min-width: 100px;
+                font-size: 14px;
+            }
+
+            .comparison-table th:nth-child(2),
+            .comparison-table td:nth-child(2),
+            .comparison-table th:nth-child(3),
+            .comparison-table td:nth-child(3) {
+                width: 35%;
+                font-size: 14px;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px 8px;
+            }
+        }
+
+        /* Shipping Videos */
+        .video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 40px;
+        }
+
+        .video-grid video {
+            width: 100%;
+            border-radius: 4px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Leather Overlay Cards */
+        .leather-section {
+            position: relative;
+            height: 100vh;
+            min-height: 800px;
+            background: url('https://images.unsplash.com/photo-1558718037-c6b2b73bc110?auto=format&fit=crop&q=80') center/cover;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .leather-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: rgba(0, 0, 0, 0.7);
+        }
+
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+            position: relative;
+            z-index: 2;
+            height: 60vh;
+            max-width: 1000px;
+            margin: 40px auto 0;
+        }
+
+        .hover-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            text-align: center;
+            color: white;
+            transition: var(--transition);
+            cursor: pointer;
+            overflow: hidden;
+        }
+
+        .hover-card:hover {
+            background: rgba(197, 160, 89, 0.2);
+            border-color: var(--gold);
+        }
+
+        .hover-card p {
+            opacity: 0;
+            transform: translateY(20px);
+            transition: var(--transition);
+            height: 0;
+            margin-top: 0;
+        }
+
+        .hover-card:hover p {
+            opacity: 1;
+            transform: translateY(0);
+            height: auto;
+            margin-top: 15px;
+        }
+
+        /* ========================
+   LEATHER GRID
+   ======================== */
+        .leather-intro {
+            padding: 100px 0 60px;
+        }
+
+        /* --- Section Divider --- */
+        .section-divider {
+            border-bottom: 1px solid var(--border-color);
+            background: #000;
+            color: #fff;
+        }
+
+        .leather-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            min-height: 600px;
+        }
+
+        .leather-card {
+            position: relative;
+            overflow: hidden;
+            border-right: 1px solid var(--border-color);
+            display: flex;
+            align-items: flex-end;
+            padding: 40px;
+            transition: flex 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            min-height: 400px;
+        }
+
+        .leather-card:hover {
+            flex: 1.5;
+        }
+
+        .leather-card img {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            z-index: 0;
+            filter: brightness(0.5);
+            transition: all 0.5s;
+        }
+
+        .leather-card:hover img {
+            filter: brightness(0.7);
+            transform: scale(1.1);
+        }
+
+        .leather-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .leather-content h4 {
+            font-size: 24px;
+            color: #fff;
+            margin-bottom: 10px;
+        }
+
+        .leather-content p {
+            font-size: 14px;
+            opacity: 0;
+            transform: translateY(20px);
+            transition: all 0.5s;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        .leather-card:hover .leather-content p {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- Section Title --- */
+        .section-title {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .section-title h2 {
+            font-size: 48px;
+            color: #c5a059;
+            margin-bottom: 10px;
+        }
+
+        .section-title p {
+            color: var(--text-muted);
+            font-size: 16px;
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        /* ====== FACTORY ENVIRONMENT MODULE ====== */
+        .factory-section {
+            padding: 100px 0;
+            background: var(--black);
+            color: var(--white);
+        }
+
+        .factory-intro {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .factory-intro h2 {
+            font-size: 2.5rem;
+            margin-bottom: 15px;
+            color: var(--gold);
+        }
+
+        .factory-intro p {
+            max-width: 800px;
+            margin: 0 auto;
+            color: #999;
+            font-size: 1.1rem;
+        }
+
+        .factory-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .factory-card {
+            position: relative;
+            overflow: hidden;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .factory-card img,
+        .factory-card video {
+            width: 100%;
+            height: 300px;
+            object-fit: cover;
+            transition: transform 0.5s;
+        }
+
+        .factory-card:hover img,
+        .factory-card:hover video {
+            transform: scale(1.05);
+        }
+
+        .factory-overlay {
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+            padding: 20px;
+            color: var(--white);
+        }
+
+        .factory-overlay h4 {
+            font-size: 1.3rem;
+            margin-bottom: 5px;
+            color: var(--gold);
+        }
+
+        .factory-overlay p {
+            font-size: 0.9rem;
+            color: #ccc;
+        }
+
+        .factory-stats {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 30px;
+            margin-top: 60px;
+            padding: 40px;
+            background: rgba(197, 160, 89, 0.1);
+            border-radius: 8px;
+            border: 1px solid rgba(197, 160, 89, 0.3);
+        }
+
+        .stat-item {
+            text-align: center;
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 700;
+            color: var(--gold);
+            font-family: var(--font-serif);
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: #999;
+            margin-top: 10px;
+        }
+
+        /* Mobile Responsive */
+        @media (max-width: 1024px) {
+            .factory-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .factory-stats {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .factory-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .factory-stats {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+
+            .factory-card img,
+            .factory-card video {
+                height: 250px;
+            }
+        }
+
+        /* Zero Risk Glassmorphism */
+        .risk-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 50px;
+        }
+
+        .glass-card {
+            backdrop-filter: blur(20px);
+            padding: 40px 30px;
+            border-radius: 12px;
+            border: 1px solid rgba(255, 255, 255, 0.4);
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.05);
+        }
+
+        .glass-card i {
+            font-size: 40px;
+            color: var(--gold);
+            margin-bottom: 20px;
+        }
+
+        .glass-card h4 {
+            padding-bottom: 1rem;
+        }
+
+        /* Tabs (Reviews) */
+        .tabs-nav {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .tab-btn {
+            background: none;
+            border: none;
+            font-size: 16px;
+            padding: 10px 20px;
+            cursor: pointer;
+            border-bottom: 2px solid transparent;
+            opacity: 0.5;
+            transition: var(--transition);
+            font-family: var(--font-serif);
+            font-size: 1.2rem;
+        }
+
+        .tab-btn.active {
+            opacity: 1;
+            border-bottom-color: var(--gold);
+            color: var(--gold);
+        }
+
+        .tab-content {
+            display: none;
+            grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+            gap: 15px;
+        }
+
+        .tab-content.active {
+            display: grid;
+            animation: fadeIn 0.5s;
+        }
+
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+            }
+
+            to {
+                opacity: 1;
+            }
+        }
+
+        /* ========================
+   BRAND WALL
+   ======================== */
+        .brand-section {
+            padding: 100px 0;
+            text-align: center;
+        }
+
+        .brand-grid {
+            display: grid;
+            grid-template-columns: repeat(6, 1fr);
+            gap: 20px;
+            max-width: 900px;
+            margin: 0 auto 50px;
+        }
+
+        .brand-item {
+            padding: 20px 12px;
+            font-family: var(--font-serif);
+            font-size: 16px;
+            color: rgba(255, 255, 255, 0.7);
+            transition: all 0.3s;
+        }
+
+        .brand-item:hover {
+            color: var(--accent-gold);
+            border-color: rgba(212, 175, 55, 0.4);
+        }
+
+        /* ========================
+   WATCH SECTION
+   ======================== */
+        .watch-section {
+            padding: 100px 0;
+        }
+
+        .watch-row {
+            display: flex;
+            align-items: center;
+            gap: 50px;
+            margin-bottom: 60px;
+        }
+
+        .watch-row.reverse {
+            flex-direction: row-reverse;
+        }
+
+        .watch-row .img-wrap {
+            flex: 1;
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .watch-row .img-wrap img {
+            width: 100%;
+        }
+
+        .watch-row .text-wrap {
+            flex: 1;
+        }
+
+        .watch-row h3 {
+            font-size: 28px;
+            color: #d4af37;
+            margin-bottom: 16px;
+        }
+
+        .watch-row ul {
+            list-style: none;
+        }
+
+        .watch-row li {
+            color: var(--text-muted);
+            margin-bottom: 12px;
+            font-size: 15px;
+            line-height: 1.6;
+        }
+
+        .watch-row li span {
+            color: #d4af37;
+        }
+
+        .watch-cta {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .watch-cta p {
+            margin-bottom: 16px;
+        }
+
+        .watch-cta .heading {
+            font-family: var(--font-serif);
+            font-size: 20px;
+        }
+
+        .watch-cta .sub {
+            color: var(--text-muted);
+            font-size: 15px;
+        }
+
+        /* Timeline 6-Steps */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 60px auto 0;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: rgba(0, 0, 0, 0.1);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+        }
+
+        .timeline-icon {
+            position: absolute;
+            left: -40px;
+            top: 0;
+            width: 32px;
+            height: 32px;
+            background: var(--black);
+            color: var(--white);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            z-index: 2;
+            box-shadow: 0 0 0 4px var(--white);
+        }
+
+        .timeline-item:nth-child(3) .timeline-icon {
+            background: var(--gold);
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 0 0 0 rgba(197, 160, 89, 0.7);
+            }
+
+            70% {
+                box-shadow: 0 0 0 10px rgba(197, 160, 89, 0);
+            }
+
+            100% {
+                box-shadow: 0 0 0 0 rgba(197, 160, 89, 0);
+            }
+        }
+
+        /* FAQ Accordion */
+        .accordion-item {
+            border-bottom: 1px solid #ddd;
+            margin-bottom: 15px;
+        }
+
+        .accordion-header {
+            width: 100%;
+            text-align: left;
+            padding: 20px 0;
+            background: none;
+            border: none;
+            font-family: var(--font-sans);
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: var(--black);
+        }
+
+        .accordion-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease-out;
+            color: #555;
+        }
+
+        .accordion-content p {
+            padding-bottom: 20px;
+        }
+
+        /* CTA Bottom & Form */
+        .cta-section {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            background: var(--gray-light);
+        }
+
+        .cta-text {
+            padding: 100px 50px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .cta-form {
+            padding: 100px 50px;
+            background: var(--black);
+            color: white;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group input,
+        .form-group select {
+            width: 100%;
+            padding: 15px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            background: transparent;
+            color: white;
+            font-family: var(--font-sans);
+            outline: none;
+            transition: border 0.3s;
+        }
+
+        .form-group input:focus,
+        .form-group select:focus {
+            border-color: var(--gold);
+        }
+
+        .form-group select option {
+            background: var(--black);
+        }
+
+        /* Logo Wall */
+        .brand-wall {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 30px;
+            opacity: 0.6;
+            margin-top: 40px;
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+        }
+
+        /* Mobile Floating Button */
+        .fab-whatsapp {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #25D366;
+            color: white;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            font-size: 30px;
+            box-shadow: 0 4px 15px rgba(37, 211, 102, 0.4);
+            z-index: 1000;
+            transition: transform 0.3s;
+        }
+
+        .fab-whatsapp:hover {
+            transform: scale(1.1);
+        }
+
+        /* Mobile Responsiveness */
+        @media (max-width: 768px) {
+
+            .z-row,
+            .z-row:nth-child(even) {
+                flex-direction: column;
+                gap: 30px;
+                margin-bottom: 60px;
+            }
+
+            .cards-grid {
+                grid-template-columns: 1fr;
+                height: auto;
+            }
+
+            .leather-section {
+                height: auto;
+                padding: 80px 0;
+            }
+
+            .cta-section {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-text,
+            .cta-form {
+                padding: 50px 24px;
+            }
+
+            .comparison-table {
+                font-size: 14px;
+            }
+
+            .comparison-table th {
+                font-size: 1.2rem;
+            }
+
+            .comparison-table th,
+            .comparison-table td {
+                padding: 12px;
+            }
+        }
+
+        /* ========================
+   MOBILE RESPONSIVE
+   ======================== */
+        @media (max-width: 1024px) {
+            .comparison-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .leather-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .brand-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+
+            .watch-row,
+            .watch-row.reverse {
+                flex-direction: column;
+                gap: 24px;
+            }
+
+            .leather-grid {
+                grid-template-columns: 1fr;
+                min-height: auto;
+            }
+
+            .leather-card {
+                min-height: 280px;
+            }
+
+            .leather-content p {
+                opacity: 1;
+                transform: translateY(0);
+            }
+
+            .hero {
+                background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url(assets/bg3.png) right/cover;
+            }
+
+            .risk-grid {
+                grid-template-columns: repeat(auto-fit, minmax(270px, 1fr));
+            }
+
+            .glass-card {
+                padding: 30px 20px;
+            }
+        }
+    </style>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log('Event Tracking Initialized');
+    
+    // Helper
+    window.trackCustomEvent = function(eventName) {
+         console.log('Sending Event:', eventName);
+         if (typeof fbq === 'function') fbq('track', eventName);
+         if (typeof ttq === 'function') ttq.track(eventName);
+         if (typeof gtag === 'function') gtag('event', eventName);
+    };
+
+});
+</script>
+<link type="text/css" rel="stylesheet" charset="UTF-8" href="https://www.gstatic.com/_/translate_http/_/ss/k=translate_http.tr.2f3WBw8L4SI.L.W.O/am=AAAG/d=0/rs=AN8SPfqYR8aMO6cXHEerk3WNK6MxN1aRTg/m=el_main_css"></head>
+
 <body>
 
-<div class="container">
-<h1>Masterfully Crafted Luxury</h1>
-<p>Explore our finest collection of bags and watches. Trusted by clients worldwide. Contact us easily via WhatsApp.</p>
-
-<!-- WhatsApp -->
-<div class="wa-button-wrap">
-  <button id="waBtn">Contact via WhatsApp</button>
-  <span id="waBadge"></span>
-</div>
-
-<!-- 产品区（新设计） -->
-<div class="section-block">
-  <h2>👜 Popular Products</h2>
-  <div class="product-gallery">
-    <!-- 女士包 -->
-    <div class="product-card">
-      <img src="https://us.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-neverfull-mm--M46975_PM2_Front%20view.jpg" alt="Neverfull MM">
-      <div class="product-info">
-        <h3>Neverfull MM</h3>
-        <button class="wa-card-btn" onclick="trackProduct('Neverfull MM', this)">Contact via WhatsApp</button>
-      </div>
+    <div class="top-bar"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">
+        大师级品质 | 源头直销 | 100% 零风险购物 |</font></font><i class="fas fa-envelope" style="margin-right: 5px;"></i> <a href="mailto:jinyuanbaojin01@outlook.com" style="color: inherit; text-decoration: none;"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">jinyuanbaojin01@outlook.com</font></font></a>
     </div>
 
-    <!-- 男士包 -->
-    <div class="product-card">
-      <img src="https://us.louisvuitton.com/images/is/image/lv/1/PP_VP_M/louis-vuitton-messenger-bag--M43895_PM2_Front%20view.jpg" alt="Messenger Bag">
-      <div class="product-info">
-        <h3>Messenger Bag</h3>
-        <button class="wa-card-btn" onclick="trackProduct('Messenger Bag', this)">Contact via WhatsApp</button>
-      </div>
-    </div>
+    <nav class="navbar scrolled" id="navbar">
+        <div class="container text-center">
+            <h2 class="logo" style="font-family: var(--font-serif); letter-spacing: 3px; color: var(--black);"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">工作室</font></font></h2>
+        </div>
+    </nav>
 
-    <!-- 手表 -->
-    <div class="product-card">
-      <img src="https://us.louisvuitton.com/images/is/image/lv/1/PP_VP_M/louis-vuitton-tambour-watch--Q1D010_PM2_Front%20view.jpg" alt="Tambour Watch">
-      <div class="product-info">
-        <h3>Tambour Watch</h3>
-        <button class="wa-card-btn" onclick="trackProduct('Tambour Watch', this)">Contact via WhatsApp</button>
-      </div>
-    </div>
-  </div>
-</div>
+    <section class="hero">
+        <div class="container fade-in-up visible">
+            <h1 class="gold-text"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">与正品难分伯仲。</font></font><br><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">肉眼无法分辨。</font></font></h1>
+            <p class="sub-headline"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">
+                工厂直销。1:1 顶级品质，25 年精湛工艺，100% 意大利真皮。从爱马仕到香奈儿，我们不只是复制，而是重塑。
+            </font></font></p>
+            <div class="hero-buttons">
+                <a href="https://luxurylineshopping.shop/cs_dispatch.php?p=1" class="btn btn-gold btn-breathe" data-url="https://luxurylineshopping.shop/cs_dispatch.php?p=1"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">获取VIP目录</font></font></a>
+                <a href="https://luxurylineshopping.shop/cs_dispatch.php?p=1" class="btn btn-outline" data-url="https://luxurylineshopping.shop/cs_dispatch.php?p=1"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">观看对比视频</font></font></a>
+            </div>
+        </div>
+    </section>
 
-<!-- 博客区 -->
-<div class="section-block">
-  <h2>📰 Latest Articles</h2>
-  <div id="blogContainer"></div>
-</div>
+    <section id="strengths" class="section-padding">
+        <div class="container text-center fade-in-up">
+            <h2 style="font-size: 2.5rem; margin-bottom: 10px;"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">25年来，我们致力于打造精品级杰作。</font></font></h2>
+            <p style="color: #666; margin-bottom: 60px;"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">我们拥有自己的独立工作室，拒绝销售大众市场商品。</font></font></p>
+        </div>
 
-<!-- 信息区 -->
-<div class="section-block info-section">
-  <h2>🚚 Shipping</h2>
-  <ul>
-    <li>Orders processed within 24 hours</li>
-    <li>DHL / FedEx / UPS shipping</li>
-    <li>Tracking number provided</li>
-  </ul>
-  <h2>💰 Payment</h2>
-  <ul>
-    <li>PayPal</li>
-    <li>Western Union</li>
-    <li>Bank Transfer</li>
-  </ul>
-</div>
+        <div class="container">
+            <div class="z-row fade-in-up">
+                <div class="z-content">
+                    <h3><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">100% 正宗意大利皮革</font></font></h3>
+                    <p><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">原料与原版完全相同。我们选用A级皮革，气味和触感与原版完全一致。我们不依赖本地市场，直接从为世界顶级奢侈品牌供货的意大利皮革厂进口皮革。</font></font></p>
+                </div>
+                <div class="z-media">
+                    <video autoplay="" muted="" loop="" playsinline="">
+                        <source src="assets/480p_x264.mp4" type="video/mp4">
+                    </video>
+                </div>
+            </div>
 
-<!-- 客户评价 -->
-<div class="section-block testimonials-container">
-  <h2>🌟 Customer Testimonials</h2>
-  <div class="testimonials-track" id="testimonialsTrack"></div>
-  <div class="testimonials-controls">
-    <button id="prevBtn">&#8592;</button>
-    <button id="nextBtn">&#8594;</button>
-  </div>
-</div>
-</div>
+            <div class="z-row fade-in-up">
+                <div class="z-content">
+                    <h3><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">精品级定制五金件</font></font></h3>
+                    <p><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">禁止使用通用零件。所有五金件均根据原装零件定制翻模而成。我们采用1:1实心黄铜和真空镀钢，确保重量、光泽和耐用性与原装零件完全一致。</font></font></p>
+                </div>
+                <div class="z-media">
+                    <img src="assets/hardware.jpg" alt="Hardware Details">
+                </div>
+            </div>
 
-<!-- 浮动 WhatsApp -->
-<div id="floatWA">
-<img src="https://upload.wikimedia.org/wikipedia/commons/6/6b/WhatsApp.svg" alt="WhatsApp">
-</div>
+            <div class="z-row fade-in-up">
+                <div class="z-content">
+                    <h3><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">正宗手工缝制马鞍缝线</font></font></h3>
+                    <p><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">我们坚持采用传统的手工马鞍缝制工艺。缝制一个包袋需要超过24小时。每一针的角度都经过精确测量。包边涂漆要涂七遍，并晾干48小时，才能达到完美无瑕的精品级效果。</font></font></p>
+                </div>
+                <div class="z-media">
+                    <img src="assets/stitching.jpg" alt="Hand Stitching">
+                </div>
+            </div>
 
-<script>
-// WhatsApp 客服与 Pixel 追踪
-const WA_POOL = [
-    {name:"Alice", link:"https://wa.me/8618396503253", event:"WA_1"},
-    {name:"Bob", link:"https://wa.me/8613062151120", event:"WA_2"},
-    {name:"Charlie", link:"https://wa.me/8615205956592", event:"WA_3"},
-    {name:"Diana", link:"https://wa.me/8618050517014", event:"WA_4"}
-];
+            <div class="z-row fade-in-up">
+                <div class="z-content">
+                    <h3><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">全球精英供应链</font></font></h3>
+                    <p><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">我们每周向纽约、伦敦和巴黎发货超过1000份订单。我们充足的库存确保您的订单在您确认最终4K质量控制视频后的24小时内发出。</font></font></p>
+                </div>
+                <div class="z-media">
+                    <img src="assets/gangkou.jpg" alt="Warehouse Shipping">
+                </div>
+            </div>
+        </div>
+    </section>
 
-function getCookie(name){const m=document.cookie.match(new RegExp('(^| )'+name+'=([^;]+)'));return m?m[2]:null;}
-function setCookie(name,value){document.cookie=name+"="+value+";path=/;max-age=2592000";}
-let waIndex = getCookie('wa_idx');
-if(waIndex===null){
-    let lastIndex = parseInt(getCookie('last_assigned_idx')) || -1;
-    waIndex = (lastIndex + 1) % WA_POOL.length;
-    setCookie('wa_idx', waIndex);
-    setCookie('last_assigned_idx', waIndex);
-}
-document.getElementById('waBadge').innerText = WA_POOL[waIndex].name;
+    <section id="contrast" class="section-padding bg-gray">
+        <div class="contrast-wrapper" style="width: 100%;">
+            <div class="text-center fade-in-up" style="max-width: 800px; margin: 0 auto 50px; padding: 0 24px;">
+                <h2 style="font-size: 2.5rem; margin-bottom: 15px;"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">我们的顶级版本为何脱颖而出</font></font></h2>
+                <p style="color: #666; margin: 0 auto 50px;"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">99%的卖家都用同样的库存照片，但发给你的却是劣质的仿品。我们购买了正品精品和三种不同等级的仿制品，向你展示你的钱究竟花在了哪里。</font></font></p>
+            </div>
+            <div class="contrast-grid fade-in-up" style="padding: 0 24px;">
+                <div class="contrast-card fade-in-up">
+                    <div class="contrast-img-wrapper"><img src="assets/1.jpg" alt="Embossing"></div>
+                    <h4><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">深压纹</font></font></h4>
+                    <p><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">低端产品字迹过深或模糊。我们采用与正品完全相同的钢模压力，确保字迹清晰锐利，间距完美。</font></font></p>
+                </div>
+                <div class="contrast-card fade-in-up">
+                    <div class="contrast-img-wrapper"><img src="assets/3.jpg" alt="Hardware"></div>
+                    <h4><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">五金件和拉链</font></font></h4>
+                    <p><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">廉价的五金件泛着刺眼的黄色。我们采用的真金真空镀层，则呈现出低调而厚重的精品光泽。</font></font></p>
+                </div>
+                <div class="contrast-card fade-in-up">
+                    <div class="contrast-img-wrapper"><img src="assets/5.jpg" alt="Patina"></div>
+                    <h4><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">皮革光泽与缝线</font></font></h4>
+                    <p><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">普通商品使用塑料尼龙线，而我们使用特定角度（15度）的蜡线。我们的天然皮革会随着时间的推移呈现出美丽的氧化效果。</font></font></p>
+                </div>
+                <div class="contrast-card fade-in-up">
+                    <div class="contrast-img-wrapper"><img src="assets/7.jpg" alt="Alignment"></div>
+                    <h4><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">模式对齐</font></font></h4>
+                    <p><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">市面上的品牌标识往往错位。而我们的工匠手工裁剪每一件产品，确保接缝100%对称，足以蒙蔽任何精品店经理的目光。</font></font></p>
+                </div>
+            </div>
 
-function goWA(){
-    const wa = WA_POOL[waIndex];
-    const eventId = 'evt_'+Date.now()+'_'+Math.random().toString(36).substr(2,6);
-    fbq('track','Lead',{customer_name: wa.name},{eventID: eventId});
-    fbq('track','Contact',{customer_name: wa.name},{eventID: eventId});
-    fbq('trackCustom', wa.event,{customer_name: wa.name},{eventID: eventId});
-    setTimeout(()=>{window.location.href=wa.link},350);
-}
 
-document.getElementById('waBtn').onclick = goWA;
-document.getElementById('floatWA').onclick = goWA;
+            <div class="mt-5 text-center fade-in-up" style="margin-top: 50px; padding: 0 24px;">
+                <h3 style="margin-bottom: 20px;"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">这就是我们发货的产品质量。</font></font></h3>
+                <p style="margin-bottom: 30px;"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">旨在通过“精品店测试”，让您有信心走进任何品牌店。</font></font></p>
+                <a href="https://luxurylineshopping.shop/cs_dispatch.php?p=1" class="btn btn-gold btn-breathe" data-url="https://luxurylineshopping.shop/cs_dispatch.php?p=1"><i class="fab fa-whatsapp" style="margin-right: 10px;"></i><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">添加 WhatsApp 以查看真实库存</font></font></a>
+            </div>
+        </div>
+    </section>
 
-// 产品点击事件
-function trackProduct(name, el){
-    const eventId = 'evt_'+Date.now()+'_'+Math.random().toString(36).substr(2,6);
-    fbq('track','ViewContent',{content_name:name,content_type:'product',value:1,currency:'USD'},{eventID:eventId});
-    goWA();
-}
+    <section id="comparison" class="section-padding bg-dark">
+        <div class="container fade-in-up text-center">
+            <h2 class="gold-text" style="font-size: 2.5rem; margin-bottom: 50px;"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">我们的工作室与市场</font></font></h2>
 
-// Blogs
-const blogs=[
-{title:"How To Choose High Quality LV Bags",img:"https://us.louisvuitton.com/images/is/image/lv/1/PP_VP_L/louis-vuitton-again--M25877_PM2_Front%20view.jpg",content:"Check stitching, zippers, and leather texture. High quality LV bags always have precise stitching and smooth zipper movement."},
-{title:"Top Trending LV Handbags 2025",img:"https://us.louisvuitton.com/images/is/image/lv/1/PP_VP_M/louis-vuitton--N40604_PM2_Front%20view.jpg",content:"Models with monogram canvas and elegant leather trims are highly popular. Factory suppliers offer better pricing for bulk orders."}
-];
-const blogContainer=document.getElementById('blogContainer');
-blogs.forEach((b,i)=>{
-    const card=document.createElement('div');card.className='blog-left-right';
-    const isEven=i%2===0;
-    card.innerHTML=`<div class="blog-image" style="order:${isEven?0:1}"><img src="${b.img}"></div>
-    <div class="blog-text" style="order:${isEven?1:0}"><h3>${b.title}</h3><p>${b.content}</p><button class="cta-btn" onclick="trackCTA('${b.title}')">Learn More</button></div>`;
-    blogContainer.appendChild(card);
+            <div style="overflow-x: auto;">
+                <table class="comparison-table">
+                    <thead>
+                        <tr>
+                            <th style="width: 20%;"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">特征</font></font></th>
+                            <th class="col-us"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">我们的顶级工作室 ✅</font></font></th>
+                            <th class="col-them"><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">其他零售商❌</font></font></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><font dir="auto" style="vertical-align: inherit;"><font dir="auto" style="vertical-align: inherit;">开发过程</font></font></td>
+                            <td class="col-us">1:1 Reverse-engineered from Authentic</td>
+                            <td class="col-them">Copied blindly from internet photos</td>
+                        </tr>
+                        <tr>
+                            <td>Materials Used</td>
+                            <td class="col-us">Imported Italian Tannery Leather</td>
+                            <td class="col-them">Cheap PU or stiff market fiber</td>
+                        </tr>
+                        <tr>
+                            <td>Transparency</td>
+                            <td class="col-us">Live video calls &amp; real stock inspection</td>
+                            <td class="col-them">Stolen photos, refuse video calls</td>
+                        </tr>
+                        <tr>
+                            <td>Payment Safety</td>
+                            <td class="col-us" style="border-bottom: 1px solid #c5a059;">Deposit first, pay balance
+                                after video QC</td>
+                            <td class="col-them">Full payment upfront, ghost you later</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div style="margin-top: 50px;">
+                <h3 style="margin-bottom: 20px;">Still Hesitating?</h3>
+                <a href="https://luxurylineshopping.shop/cs_dispatch.php?p=1" class="btn btn-gold" data-url="https://luxurylineshopping.shop/cs_dispatch.php?p=1"><i class="fab fa-whatsapp" style="margin-right: 10px;"></i> Get a
+                    Macro "Authentic vs. Ours" Video Now</a>
+            </div>
+
+            <div class="video-grid" style="margin-top: 80px;">
+                <video autoplay="" muted="" loop="" playsinline="">
+                    <source src="assets/f3.mp4" type="video/mp4">
+                </video>
+                <video autoplay="" muted="" loop="" playsinline="">
+                    <source src="assets/f2.mp4" type="video/mp4">
+                </video>
+            </div>
+        </div>
+    </section>
+    <section class="section-divider" style="padding:0;">
+        <div class="leather-intro">
+            <div class="container">
+                <div class="section-title reveal">
+                    <h2>Why Leather Determines Everything</h2>
+                    <p>We don't use local market leather. We import directly from top tanneries in Tuscany and Veneto —
+                        100% authentic Italian factory leather — the same suppliers used by the world's leading luxury
+                        houses.</p>
+                </div>
+            </div>
+        </div>
+        <div class="leather-grid">
+            <div class="leather-card reveal">
+                <img src="assets/warehouse.jpg" alt="Italian Warehouse" loading="lazy">
+                <div class="leather-content">
+                    <h4>Italian Leather Warehouse</h4>
+                    <p>Direct from the source. Our warehouse stocks over $2M in imported calfskin, lambskin, and exotic
+                        hides. We control quality from the very first hide.</p>
+                </div>
+            </div>
+            <div class="leather-card reveal">
+                <img src="assets/scent-test.jpg" alt="Scent Test" loading="lazy">
+                <div class="leather-content">
+                    <h4>The Scent &amp; Feel Test</h4>
+                    <p>It doesn't just look luxurious — it smells luxurious. Rich, earthy, expensive raw leather aroma.
+                        No chemical odors.</p>
+                </div>
+            </div>
+            <div class="leather-card reveal">
+                <img src="assets/texture.jpg" alt="Texture" loading="lazy">
+                <div class="leather-content">
+                    <h4>Boutique-Identical Texture</h4>
+                    <p>Whether it's Chanel Caviar or LV Coated Canvas, our materials match the original in grain,
+                        thickness, and suppleness.</p>
+                </div>
+            </div>
+            <div class="leather-card reveal">
+                <img src="assets/patina.jpg" alt="Natural Patina" loading="lazy">
+                <div class="leather-content">
+                    <h4>Natural Patina Over Time</h4>
+                    <p>Our Vachetta leather oxidizes naturally, transitioning from a light cream to a rich honey gold.
+                        The ultimate hallmark of genuine quality.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="risk" class="section-padding">
+        <div class="container fade-in-up text-center" style="background: rgba(255,255,255,0.85); padding: 60px; border-radius: 20px; backdrop-filter: blur(10px);">
+            <h2 style="font-size: 2.5rem; margin-bottom: 10px;">100% Zero-Risk Shopping</h2>
+            <p style="margin-bottom: 40px;">We have established a flawless risk-control system to ensure you receive
+                your dream item.</p>
+
+            <div class="risk-grid">
+                <div class="glass-card">
+                    <i class="fab fa-paypal"></i>
+                    <h4>PayPal Buyer Protection</h4>
+                    <p>We accept PayPal (Goods &amp; Services). We hand the power back to you. If we don't ship or the item
+                        doesn't match the video, you are fully protected.</p>
+                </div>
+                <div class="glass-card">
+                    <i class="fas fa-video"></i>
+                    <h4>4K Pre-Shipment Video QC</h4>
+                    <p>Before shipping, we record a 4K video showing your bag alongside a card with your name and date.
+                        Approve it, and we ship. Dislike it? Instant full refund.</p>
+                </div>
+                <div class="glass-card">
+                    <i class="fas fa-shield-alt"></i>
+                    <h4>100% Customs Guarantee</h4>
+                    <p>Customs seizure? Our loss, not yours. We offer a free replacement or a full refund. With 25 years
+                        of experience, we know the safest routes.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="reviews" class="section-padding bg-gray">
+        <div class="container text-center fade-in-up">
+            <h2 style="font-size: 2.5rem; margin-bottom: 10px;">The Unanimous Choice of Global Connoisseurs</h2>
+            <p style="margin-bottom: 40px;">Our clientele includes Western influencers, bloggers, and boutique regulars
+                who demand unspoken top-tier texture.</p>
+
+            <div class="tabs-nav">
+                <button class="tab-btn active" onclick="openTab(event, 'tab-payments')">Payment Proofs</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab-shipping')">Customs &amp; Shipping</button>
+                <button class="tab-btn" onclick="openTab(event, 'tab-feedback')">VIP Feedback</button>
+            </div>
+
+            <div id="tab-payments" class="tab-content active">
+                <img src="assets/j1.png" alt="Proof">
+                <img src="assets/j2.jpg" alt="Proof">
+                <img src="assets/j3.jpg" alt="Proof">
+                <img src="assets/j4.jpg" alt="Proof">
+                <img src="assets/j5.jpg" alt="Proof">
+                <img src="assets/j6.jpg" alt="Proof">
+                <img src="assets/j7.jpg" alt="Proof">
+                <img src="assets/j8.jpg" alt="Proof">
+            </div>
+            <div id="tab-shipping" class="tab-content">
+                <img src="assets/h1.png" alt="Proof">
+                <img src="assets/h2.png" alt="Proof">
+                <img src="assets/h3.png" alt="Proof">
+                <img src="assets/h4.png" alt="Proof">
+                <img src="assets/h5.png" alt="Proof">
+                <img src="assets/h6.png" alt="Proof">
+                <img src="assets/h7.png" alt="Proof">
+                <img src="assets/h8.png" alt="Proof">
+            </div>
+            <div id="tab-feedback" class="tab-content">
+                <img src="assets/p1.png" alt="Proof">
+                <img src="assets/p2.png" alt="Proof">
+                <img src="assets/p3.png" alt="Proof">
+                <img src="assets/p4.png" alt="Proof">
+                <img src="assets/p5.png" alt="Proof">
+                <img src="assets/p6.png" alt="Proof">
+            </div>
+
+        </div>
+    </section>
+    <!-- ====== FACTORY ENVIRONMENT ====== -->
+    <section id="factory" class="factory-section">
+        <div class="container fade-in-up">
+            <div class="factory-intro">
+                <h2>Inside Our Independent Atelier</h2>
+                <p>25 years of craftsmanship. Every bag is handcrafted by master artisans in our own factory — no
+                    outsourcing, no mass production.</p>
+            </div>
+
+            <div class="factory-grid">
+                <div class="factory-card">
+                    <img src="assets/g3.jpg" alt="Workshop Floor" loading="lazy">
+                    <div class="factory-overlay">
+                        <h4>Master Workshop</h4>
+                        <p>50+ skilled artisans at work</p>
+                    </div>
+                </div>
+                <div class="factory-card">
+                    <img src="assets/g2.jpg" alt="Leather Cutting" loading="lazy">
+                    <div class="factory-overlay">
+                        <h4>Precision Cutting</h4>
+                        <p>Hand-cut patterns for perfect alignment</p>
+                    </div>
+                </div>
+                <div class="factory-card">
+                    <img src="assets/g5.jpg" alt="Hand Stitching" loading="lazy">
+                    <div class="factory-overlay">
+                        <h4>Hand Stitching Station</h4>
+                        <p>Traditional saddle stitch technique</p>
+                    </div>
+                </div>
+                <div class="factory-card">
+                    <img src="assets/g6.jpg" alt="Hardware Assembly" loading="lazy">
+                    <div class="factory-overlay">
+                        <h4>Hardware Assembly</h4>
+                        <p>1:1 custom molds from authentic pieces</p>
+                    </div>
+                </div>
+                <div class="factory-card">
+                    <img src="assets/g4.jpg" alt="Quality Control" loading="lazy">
+                    <div class="factory-overlay">
+                        <h4>Quality Control Room</h4>
+                        <p>7-point inspection before shipping</p>
+                    </div>
+                </div>
+                <div class="factory-card">
+                    <video autoplay="" muted="" loop="" playsinline="" loading="lazy">
+                        <source src="assets/zs.mp4" type="video/mp4">
+                    </video>
+                    <div class="factory-overlay">
+                        <h4>Virtual Factory Tour</h4>
+                        <p>See our craftsmanship in action</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="factory-stats">
+                <div class="stat-item">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Years Experience</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">50+</div>
+                    <div class="stat-label">Master Artisans</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">1,000+</div>
+                    <div class="stat-label">Weekly Orders</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">24h</div>
+                    <div class="stat-label">QC &amp; Dispatch</div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- ====== BRAND WALL ====== -->
+    <section class="brand-section section-divider">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>Build Your Dream Collection</h2>
+                <p>Start stocking up now</p>
+            </div>
+
+            <div class="brand-grid reveal">
+                <div class="brand-item glass-card">Hermès</div>
+                <div class="brand-item glass-card">Chanel</div>
+                <div class="brand-item glass-card">Louis Vuitton</div>
+                <div class="brand-item glass-card">Dior</div>
+                <div class="brand-item glass-card">Goyard</div>
+                <div class="brand-item glass-card">Gucci</div>
+                <div class="brand-item glass-card">Celine</div>
+                <div class="brand-item glass-card">Saint Laurent</div>
+                <div class="brand-item glass-card">Loewe</div>
+                <div class="brand-item glass-card">Bottega Veneta</div>
+                <div class="brand-item glass-card">Prada</div>
+                <div class="brand-item glass-card">Miu Miu</div>
+            </div>
+
+            <div class="reveal">
+                <a href="https://luxurylineshopping.shop/cs_dispatch.php?p=1" target="_blank" rel="noopener noreferrer" data-url="https://luxurylineshopping.shop/cs_dispatch.php?p=1" class="btn btn-outline">Browse Full Catalog &amp; Video Reviews</a>
+            </div>
+        </div>
+    </section>
+
+
+    <section id="timeline" class="section-padding">
+        <div class="container fade-in-up">
+            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 50px;">Our 100% Secure 6-Step Buyer
+                Protection</h2>
+
+            <div class="timeline">
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-video"></i></div>
+                    <h4>Step 1: Instant Consult &amp; Live Video</h4>
+                    <p>Unsure if we are real? Book a live video call to inspect our stock. Say no to "ghost" sellers.
+                    </p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fab fa-paypal"></i></div>
+                    <h4>Step 2: "Safety First" Payment Plan</h4>
+                    <p>Fully protected by PayPal. Opt for our Deposit Mode: Pay a small deposit now, clear the balance
+                        only after the video QC.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-search-plus"></i></div>
+                    <h4>Step 3: Exclusive 4K Video QC</h4>
+                    <p>We shoot a custom video showing your actual bag with your name and date. Inspect the stitching
+                        yourself. Not satisfied? Instant refund.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-box-open"></i></div>
+                    <h4>Step 4: Discrete Global Shipping</h4>
+                    <p>With 25 years of logistics expertise, we disguise packages perfectly. Global tracking provided
+                        within 24 hours of shipment.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-shield-alt"></i></div>
+                    <h4>Step 5: 100% Customs Insurance</h4>
+                    <p>If confiscated by customs, don't panic. We guarantee one free reshipment. We bear the loss
+                        entirely.</p>
+                </div>
+                <div class="timeline-item">
+                    <div class="timeline-icon"><i class="fas fa-heart"></i></div>
+                    <h4>Step 6: Satisfaction Guaranteed upon Arrival</h4>
+                    <p>If the item arrives damaged or differs from the QC video, our elite after-sales team will resolve
+                        it immediately.</p>
+                </div>
+            </div>
+
+            <div class="text-center" style="margin-top: 50px;">
+                <a href="https://luxurylineshopping.shop/cs_dispatch.php?p=1" class="btn btn-gold btn-breathe" data-url="https://luxurylineshopping.shop/cs_dispatch.php?p=1">👉 Learn About Our Secure PayPal Plan</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- ====== WATCH SECTION ====== -->
+    <section class="watch-section section-divider">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>Master-Grade Timepieces for the Modern Connoisseur</h2>
+                <p>A world-class bag deserves a world-class watch. Complete your look with our 1:1 Swiss clone
+                    timepieces — the perfect marriage of precision engineering and fine jewelry.</p>
+            </div>
+
+            <div class="watch-row reveal">
+                <div class="img-wrap">
+                    <img src="assets/watchwomens.jpg" alt="Women's luxury watch" loading="lazy">
+                </div>
+                <div class="text-wrap">
+
+                    <ul>
+                        <li><span>Swiss-Grade Precision:</span><br> Premium Swiss movements or 1:1 clone calibers.
+                            Silky smooth sweep seconds, accurate timekeeping.</li>
+                        <li><span>Boutique Materials:</span><br> 904L stainless steel, sapphire scratch-resistant
+                            crystal, vacuum-plated 18K gold. Same weight, same feel.</li>
+                        <li><span>Details Define Everything:</span> <br>From serial numbers between lugs to laser
+                            anti-counterfeit markings on the crystal — we overlook nothing.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="watch-row reverse reveal">
+                <div class="img-wrap">
+                    <img src="assets/watchmens.jpg" alt="Men's luxury watch" loading="lazy">
+                </div>
+                <div class="text-wrap">
+                    <h3>Gentleman's Collection</h3>
+                    <p style="color:var(--text-muted);font-size:15px;line-height:1.7;">A symbol of power, status, and
+                        durability. Built for the boardroom elite. Whether it's an important board meeting or a weekend
+                        getaway, our men's collection perfectly balances function and luxury.</p>
+                </div>
+            </div>
+
+            <div class="watch-cta reveal">
+                <p class="heading">Shopping for your partner, or perfecting your own collection?</p>
+                <p class="sub">Ask about our "Luxury Bundle" discount. Order a master-grade watch with a handbag for
+                    exclusive pricing and combined secure shipping.</p>
+                <br>
+                <a href="https://luxurylineshopping.shop/cs_dispatch.php?p=1" target="_blank" rel="noopener noreferrer" class="btn btn-gold" data-url="https://luxurylineshopping.shop/cs_dispatch.php?p=1">
+                    <i data-lucide="message-circle" style="width:16px;height:16px;"></i> Inquire About Bundles
+                </a>
+            </div>
+        </div>
+    </section>
+
+    <section id="faq" class="section-padding">
+        <div class="container fade-in-up" style="max-width: 800px;">
+            <h2 class="text-center" style="font-size: 2.5rem; margin-bottom: 40px;">Frequently Asked Questions</h2>
+
+            <div class="accordion-item">
+                <button class="accordion-header">What if customs seizes my package? <i class="fas fa-plus"></i></button>
+                <div class="accordion-content">
+                    <p>We use mature, discrete global shipping routes with professional packaging. In the rare event of
+                        a seizure, we guarantee a 100% free replacement or refund.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Is it really unnoticeable as a replica? <i class="fas fa-plus"></i></button>
+                <div class="accordion-content">
+                    <p>Darling, we won't claim 100%, because only the boutique is 100%. But we guarantee that unless
+                        examined by an authenticator with a loupe, your friends—or even boutique SAs—cannot tell the
+                        difference by eye or touch.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Others claim the same quality for much cheaper. Why? <i class="fas fa-plus"></i></button>
+                <div class="accordion-content">
+                    <p>We don't sell photos; we sell premium materials. If you want a bag for a season, buy the cheap
+                        ones. If you want a bag for a decade that fools the experts, buy ours.</p>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <button class="accordion-header">Can this pass professional authentication? Can I resell it? <i class="fas fa-plus"></i></button>
+                <div class="accordion-content">
+                    <p>Our similarity is up to 98%, indistinguishable to the naked eye. However, we <strong>strictly
+                            prohibit</strong> its use for resale as genuine on second-hand platforms. This is our
+                        ethical bottom line and protects you.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="cta" class="cta-section">
+       <div class="cta-text fade-in-up">
+            <h2 style="font-size: 3rem; margin-bottom: 20px;">Still Hesitating? Let's Chat Directly.</h2>
+            <p style="font-size: 1.2rem; color: #555; margin-bottom: 15px;">Leave your WhatsApp, click the floating
+                button, or email us directly. First-time clients saying "Hi" unlock an exclusive VIP quote and Free Global Shipping.</p>
+            <p style="font-size: 1.2rem; font-weight: 500; margin-bottom: 30px;">
+                <i class="fas fa-envelope" style="color: var(--gold); margin-right: 10px;"></i>
+                <a href="mailto:jinyuanbaojin01@outlook.com" style="color: var(--black); border-bottom: 1px solid var(--gold); padding-bottom: 2px;">jinyuanbaojin01@outlook.com</a>
+            </p>
+            <p style="font-family: var(--font-serif); font-size: 1.5rem; font-style: italic; color: var(--gold);">Start
+                Your Luxury Journey Now.</p>
+        </div>
+        <div class="cta-form fade-in-up">
+            <h3 style="margin-bottom: 30px; font-size: 2rem;">Get Your VIP Access</h3>
+            <form action="/submit_form.php" method="POST" enctype="multipart/form-data">
+<input type="hidden" name="form_id" value="2">
+                <div class="form-group">
+                    <input type="text" name="names" placeholder="Your Name" required="">
+                </div>
+                <div class="form-group">
+                    <input type="text" name="whatsapps" placeholder="WhatsApp Number (with Country Code)" required="">
+                </div>
+                <div class="form-group">
+                    <select required="" name="styles">
+                        <option value="" disabled="" selected="">Which brand are you looking for?</option>
+                        <option value="hermes">Hermès</option>
+                        <option value="chanel">Chanel</option>
+                        <option value="lv">Louis Vuitton</option>
+                        <option value="dior">Dior</option>
+                        <option value="other">Other Brands / Watches</option>
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-gold btn-breathe" style="width: 100%; border: none;">Send Me The
+                    Factory Videos</button>
+            </form>
+        </div>
+    </section>
+
+    <a href="https://luxurylineshopping.shop/cs_dispatch.php?p=1" class="fab-whatsapp" target="_blank" data-url="https://luxurylineshopping.shop/cs_dispatch.php?p=1">
+        <i class="fab fa-whatsapp"></i>
+    </a>
+    <!-- Footer -->
+
+<footer style="padding: 40px; text-align: center; border-top: 1px solid #eee; font-size: 0.9rem; color: #666; background: var(--white);">
+        <p style="margin-bottom: 10px;">
+            <i class="fas fa-envelope" style="margin-right: 5px; color: var(--gold);"></i> 
+            <a href="mailto:jinyuanbaojin01@outlook.com" style="color: inherit; transition: color 0.3s;" onmouseover="this.style.color='var(--gold)'" onmouseout="this.style.color='inherit'">jinyuanbaojin01@outlook.com</a>
+        </p>
+        <p style="font-size: 0.8rem;">© 2026 Atelier Masterpiece. All rights reserved. Discreet Global Delivery.</p>
+    </footer>
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    // 1. 选中所有带有 btn 或 fab-whatsapp 类的按钮
+    var trackingButtons = document.querySelectorAll('.btn, .fab-whatsapp');
+    
+    // 2. 遍历并给它们绑定点击事件
+    trackingButtons.forEach(function(btn) {
+        btn.addEventListener('click', function(e) {
+            
+            // 只有当按钮有真实的链接跳转时，我们才需要拦截和延迟
+            // 如果按钮本身是通过其他 JS 控制的弹窗，就不拦截默认行为了
+            var targetUrl = btn.getAttribute('href'); 
+            var requiresDelay = targetUrl && targetUrl !== '#' && !targetUrl.startsWith('javascript:');
+
+            if (requiresDelay) {
+                e.preventDefault(); // 暂时阻止跳转
+            }
+
+            // 3. 触发 Facebook 的标准联系事件 (Contact)
+            if (typeof fbq === 'function') {
+                fbq('track', 'Contact');
+                console.log('FB Pixel: Contact 事件已触发');
+            }
+
+            // 4. 如果有目标链接，延迟 800ms 后再跳过去
+            if (requiresDelay) {
+                setTimeout(function() {
+                    // 如果是新窗口打开 (_blank)
+                    if (btn.getAttribute('target') === '_blank') {
+                        window.open(targetUrl, '_blank');
+                    } else {
+                        // 否则在当前窗口跳转
+                        window.location.href = targetUrl;
+                    }
+                }, 800); 
+            }
+        });
+    });
 });
-function trackCTA(title){
-    const eventId = 'evt_'+Date.now()+'_'+Math.random().toString(36).substr(2,6);
-    fbq('track','Lead',{content_name:title},{eventID:eventId});
-    goWA();
-}
-
-// Testimonials
-const customerNames = ["Alice","Bob","Charlie","Diana","Ethan","Fiona","George","Hannah","Ivan","Julia","Kevin","Laura"];
-const allTestimonials = ["Great quality, fast delivery! Highly recommend.","Excellent service, very satisfied with my order.","Amazing products and very responsive WhatsApp support.","Products exceeded my expectations!","Very reliable supplier, smooth transaction.","Love the quality of the products, will order again.","Fast shipping and good communication.","Highly professional, very happy with my purchase"];
-function getRandomColor(){return "#"+Math.floor(Math.random()*16777215).toString(16);}
-function getRandomTestimonials(n){const shuffled=allTestimonials.sort(()=>0.5-Math.random());return shuffled.slice(0,n);}
-function getRandomName(){return customerNames[Math.floor(Math.random()*customerNames.length)];}
-const track=document.getElementById('testimonialsTrack');
-const testimonials=getRandomTestimonials(3);
-testimonials.forEach(text=>{
-    const name=getRandomName();const color1=getRandomColor();const color2=getRandomColor();
-    const div=document.createElement('div');div.className='testimonial-card';
-    div.innerHTML=`<div class="testimonial-avatar" style="background: linear-gradient(135deg, ${color1}, ${color2})">${name.charAt(0)}</div><p><strong>${name}:</strong> "${text}"</p>`;
-    track.appendChild(div);
-});
-const cards=track.children;let index=0;
-function showSlide(i){track.style.transform=`translateX(-${i*85}%)`;}
-setInterval(()=>{index=(index+1)%cards.length;showSlide(index);},3000);
-document.getElementById('prevBtn').onclick=()=>{index=(index-1+cards.length)%cards.length;showSlide(index);};
-document.getElementById('nextBtn').onclick=()=>{index=(index+1)%cards.length;showSlide(index);};
 </script>
+    <script>
+        // 1. Scroll Fade-in Animation (Intersection Observer)
+        const observerOptions = { root: null, rootMargin: '0px', threshold: 0.15 };
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                    observer.unobserve(entry.target); // Run once
+                }
+            });
+        }, observerOptions);
 
-</body>
-</html>
+        document.querySelectorAll('.fade-in-up').forEach(el => observer.observe(el));
+
+        // 2. Navbar Scroll Effect
+        window.addEventListener('scroll', () => {
+            const nav = document.getElementById('navbar');
+            if (window.scrollY > 50) {
+                nav.classList.add('scrolled');
+                nav.querySelector('.logo').style.color = 'var(--black)';
+            } else {
+                nav.classList.remove('scrolled');
+                nav.querySelector('.logo').style.color = 'var(--white)';
+            }
+        });
+
+        // 3. Smooth Scrolling for Anchor Links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    window.scrollTo({
+                        top: target.offsetTop - 80, // Offset for sticky header
+                        behavior: 'smooth'
+                    });
+                }
+            });
+        });
+
+        // 4. Tab Switching Logic
+        function openTab(evt, tabName) {
+            let i, tabcontent, tablinks;
+            tabcontent = document.getElementsByClassName("tab-content");
+            for (i = 0; i < tabcontent.length; i++) {
+                tabcontent[i].classList.remove("active");
+            }
+            tablinks = document.getElementsByClassName("tab-btn");
+            for (i = 0; i < tablinks.length; i++) {
+                tablinks[i].classList.remove("active");
+            }
+            document.getElementById(tabName).classList.add("active");
+            evt.currentTarget.classList.add("active");
+        }
+
+        // Pause auto-switch on user interaction
+        let autoSwitchEnabled = true;
+        const tabs = ['tab-payments', 'tab-shipping', 'tab-feedback'];
+
+        document.querySelectorAll('.tab-btn').forEach(btn => {
+            btn.addEventListener('click', () => {
+                autoSwitchEnabled = false;
+            });
+        });
+
+        setInterval(() => {
+            if (autoSwitchEnabled) {
+                currentTabIndex = (currentTabIndex + 1) % tabs.length;
+                const buttons = document.querySelectorAll('.tab-btn');
+                buttons[currentTabIndex].click();
+            }
+        }, 5000);
+
+        // 5. Accordion Logic for FAQ
+        const accordions = document.querySelectorAll(".accordion-header");
+        accordions.forEach(acc => {
+            acc.addEventListener("click", function () {
+                this.classList.toggle("active");
+                const icon = this.querySelector('i');
+                if (icon.classList.contains('fa-plus')) {
+                    icon.classList.replace('fa-plus', 'fa-minus');
+                } else {
+                    icon.classList.replace('fa-minus', 'fa-plus');
+                }
+
+                const panel = this.nextElementSibling;
+                if (panel.style.maxHeight) {
+                    panel.style.maxHeight = null;
+                } else {
+                    panel.style.maxHeight = panel.scrollHeight + "px";
+                }
+            });
+        });
+    </script>
+
+<script defer="" src="https://static.cloudflareinsights.com/beacon.min.js/v8c78df7c7c0f484497ecbca7046644da1771523124516" integrity="sha512-8DS7rgIrAmghBFwoOTujcf6D9rXvH8xm8JQ1Ja01h9QX8EzXldiszufYa4IFfKdLUKTTrnSFXLDkUEOTrZQ8Qg==" data-cf-beacon="{&quot;version&quot;:&quot;2024.11.0&quot;,&quot;token&quot;:&quot;7904f7b410554b2bace667813a722e7b&quot;,&quot;r&quot;:1,&quot;server_timing&quot;:{&quot;name&quot;:{&quot;cfCacheStatus&quot;:true,&quot;cfEdge&quot;:true,&quot;cfExtPri&quot;:true,&quot;cfL4&quot;:true,&quot;cfOrigin&quot;:true,&quot;cfSpeedBrain&quot;:true},&quot;location_startswith&quot;:null}}" crossorigin="anonymous"></script>
+
+
+<div id="kins-kins-popup" style="color-scheme: initial; forced-color-adjust: initial; math-depth: initial; position: initial; position-anchor: initial; text-size-adjust: initial; appearance: initial; color: initial; direction: ltr; font-family: Rubik, sans-serif; font-feature-settings: initial; font-kerning: initial; font-language-override: initial; font-optical-sizing: initial; font-palette: initial; font-size: medium; font-size-adjust: initial; font-stretch: initial; font-style: initial; font-synthesis: initial; font-variant: initial; font-variation-settings: initial; font-weight: initial; position-area: initial; text-orientation: initial; text-rendering: initial; text-spacing-trim: initial; -webkit-font-smoothing: initial; -webkit-locale: initial; -webkit-text-orientation: initial; -webkit-writing-mode: initial; writing-mode: initial; zoom: initial; accent-color: initial; place-content: initial; place-items: initial; place-self: initial; alignment-baseline: initial; anchor-name: initial; anchor-scope: initial; animation-composition: initial; animation: initial; animation-trigger: initial; app-region: initial; aspect-ratio: initial; backdrop-filter: initial; backface-visibility: initial; background: none; background-blend-mode: initial; baseline-shift: initial; baseline-source: initial; block-size: initial; border-block: initial; border: none; border-radius: initial; border-collapse: initial; border-end-end-radius: initial; border-end-start-radius: initial; border-inline: initial; border-start-end-radius: initial; border-start-start-radius: initial; inset: initial; box-decoration-break: initial; box-shadow: initial; box-sizing: border-box; break-after: initial; break-before: initial; break-inside: initial; buffered-rendering: initial; caption-side: initial; caret-animation: initial; caret-color: initial; caret-shape: initial; clear: initial; clip: initial; clip-path: initial; clip-rule: initial; color-interpolation: initial; color-interpolation-filters: initial; color-rendering: initial; columns: initial; column-fill: initial; gap: initial; column-rule: initial; column-span: initial; contain: initial; contain-intrinsic-block-size: initial; contain-intrinsic-size: initial; contain-intrinsic-inline-size: initial; container: initial; content: initial; content-visibility: initial; corner-shape: initial; corner-block-end-shape: initial; corner-block-start-shape: initial; counter-increment: initial; counter-reset: initial; counter-set: initial; cursor: initial; cx: initial; cy: initial; d: initial; display: block !important; dominant-baseline: initial; dynamic-range-limit: initial; empty-cells: initial; field-sizing: initial; fill: initial; fill-opacity: initial; fill-rule: initial; filter: initial; flex: initial; flex-flow: initial; float: initial; flood-color: initial; flood-opacity: initial; grid: initial; grid-area: initial; height: auto; hyphenate-character: initial; hyphenate-limit-chars: initial; hyphens: initial; image-orientation: initial; image-rendering: initial; initial-letter: initial; inline-size: initial; inset-block: initial; inset-inline: initial; interactivity: initial; interest-delay: initial; interpolate-size: initial; isolation: initial; letter-spacing: initial; lighting-color: initial; line-break: initial; line-height: normal; list-style: initial; margin-block: initial; margin: 0px; margin-inline: initial; marker: initial; mask: initial; mask-type: initial; math-shift: initial; math-style: initial; max-block-size: initial; max-height: initial; max-inline-size: initial; max-width: initial; min-block-size: initial; min-height: initial; min-inline-size: initial; min-width: initial; mix-blend-mode: initial; object-fit: initial; object-position: initial; object-view-box: initial; offset: initial; opacity: initial; order: initial; orphans: initial; outline: initial; outline-offset: initial; overflow-anchor: initial; overflow-block: initial; overflow-clip-margin: initial; overflow-inline: initial; overflow-wrap: initial; overflow: initial; overlay: initial; overscroll-behavior-block: none; overscroll-behavior-inline: none; overscroll-behavior: none; padding-block: initial; padding: 0px; padding-inline: initial; page: initial; page-orientation: initial; paint-order: initial; perspective: initial; perspective-origin: initial; pointer-events: initial; position-try: initial; position-visibility: initial; print-color-adjust: initial; quotes: initial; r: initial; reading-flow: initial; reading-order: initial; resize: initial; rotate: initial; ruby-align: initial; ruby-position: initial; rx: initial; ry: initial; scale: initial; scroll-behavior: initial; scroll-initial-target: initial; scroll-margin-block: initial; scroll-margin: initial; scroll-margin-inline: initial; scroll-marker-group: initial; scroll-padding-block: initial; scroll-padding: initial; scroll-padding-inline: initial; scroll-snap-align: initial; scroll-snap-stop: initial; scroll-snap-type: initial; scroll-target-group: initial; scroll-timeline: initial; scrollbar-color: initial; scrollbar-gutter: initial; scrollbar-width: initial; shape-image-threshold: initial; shape-margin: initial; shape-outside: initial; shape-rendering: initial; size: initial; speak: initial; stop-color: initial; stop-opacity: initial; stroke: initial; stroke-dasharray: initial; stroke-dashoffset: initial; stroke-linecap: initial; stroke-linejoin: initial; stroke-miterlimit: initial; stroke-opacity: initial; stroke-width: initial; tab-size: initial; table-layout: initial; text-align: left; text-align-last: initial; text-anchor: initial; text-autospace: initial; text-box: initial; text-combine-upright: initial; text-decoration: none; text-decoration-skip-ink: initial; text-emphasis: initial; text-emphasis-position: initial; text-indent: initial; text-justify: initial; text-overflow: initial; text-shadow: initial; text-transform: initial; text-underline-offset: initial; text-underline-position: initial; text-wrap: wrap; timeline-scope: initial; timeline-trigger: initial; touch-action: initial; transform: initial; transform-box: initial; transform-origin: initial; transform-style: initial; transition: initial; translate: initial; trigger-scope: initial; user-select: initial; vector-effect: initial; vertical-align: initial; view-timeline: initial; view-transition-class: initial; view-transition-group: initial; view-transition-name: initial; visibility: initial; border-spacing: initial; -webkit-box-align: initial; -webkit-box-decoration-break: initial; -webkit-box-direction: initial; -webkit-box-flex: initial; -webkit-box-ordinal-group: initial; -webkit-box-orient: initial; -webkit-box-pack: initial; -webkit-box-reflect: initial; -webkit-line-break: initial; -webkit-line-clamp: initial; -webkit-mask-box-image: initial; -webkit-rtl-ordering: initial; -webkit-ruby-position: initial; -webkit-tap-highlight-color: initial; -webkit-text-combine: initial; -webkit-text-decorations-in-effect: initial; -webkit-text-fill-color: initial; -webkit-text-security: initial; -webkit-text-stroke: initial; -webkit-user-drag: initial; white-space-collapse: collapse; widows: initial; width: auto; will-change: initial; word-break: initial; word-spacing: initial; x: initial; y: initial; z-index: initial;"><style>
+                    #kins_root {
+                        display: block !important;
+                    }
+                </style><div id="kins_root" style="color-scheme: initial; forced-color-adjust: initial; math-depth: initial; position: initial; position-anchor: initial; text-size-adjust: initial; appearance: initial; color: initial; direction: ltr; font-family: Rubik, sans-serif; font-feature-settings: initial; font-kerning: initial; font-language-override: initial; font-optical-sizing: initial; font-palette: initial; font-size: medium; font-size-adjust: initial; font-stretch: initial; font-style: initial; font-synthesis: initial; font-variant: initial; font-variation-settings: initial; font-weight: initial; position-area: initial; text-orientation: initial; text-rendering: initial; text-spacing-trim: initial; -webkit-font-smoothing: initial; -webkit-locale: initial; -webkit-text-orientation: initial; -webkit-writing-mode: initial; writing-mode: initial; zoom: initial; accent-color: initial; place-content: initial; place-items: initial; place-self: initial; alignment-baseline: initial; anchor-name: initial; anchor-scope: initial; animation-composition: initial; animation: initial; animation-trigger: initial; app-region: initial; aspect-ratio: initial; backdrop-filter: initial; backface-visibility: initial; background: none; background-blend-mode: initial; baseline-shift: initial; baseline-source: initial; block-size: initial; border-block: initial; border: none; border-radius: initial; border-collapse: initial; border-end-end-radius: initial; border-end-start-radius: initial; border-inline: initial; border-start-end-radius: initial; border-start-start-radius: initial; inset: initial; box-decoration-break: initial; box-shadow: initial; box-sizing: border-box; break-after: initial; break-before: initial; break-inside: initial; buffered-rendering: initial; caption-side: initial; caret-animation: initial; caret-color: initial; caret-shape: initial; clear: initial; clip: initial; clip-path: initial; clip-rule: initial; color-interpolation: initial; color-interpolation-filters: initial; color-rendering: initial; columns: initial; column-fill: initial; gap: initial; column-rule: initial; column-span: initial; contain: initial; contain-intrinsic-block-size: initial; contain-intrinsic-size: initial; contain-intrinsic-inline-size: initial; container: initial; content: initial; content-visibility: initial; corner-shape: initial; corner-block-end-shape: initial; corner-block-start-shape: initial; counter-increment: initial; counter-reset: initial; counter-set: initial; cursor: initial; cx: initial; cy: initial; d: initial; display: block; dominant-baseline: initial; dynamic-range-limit: initial; empty-cells: initial; field-sizing: initial; fill: initial; fill-opacity: initial; fill-rule: initial; filter: initial; flex: initial; flex-flow: initial; float: initial; flood-color: initial; flood-opacity: initial; grid: initial; grid-area: initial; height: auto; hyphenate-character: initial; hyphenate-limit-chars: initial; hyphens: initial; image-orientation: initial; image-rendering: initial; initial-letter: initial; inline-size: initial; inset-block: initial; inset-inline: initial; interactivity: initial; interest-delay: initial; interpolate-size: initial; isolation: initial; letter-spacing: initial; lighting-color: initial; line-break: initial; line-height: normal; list-style: initial; margin-block: initial; margin: 0px; margin-inline: initial; marker: initial; mask: initial; mask-type: initial; math-shift: initial; math-style: initial; max-block-size: initial; max-height: initial; max-inline-size: initial; max-width: initial; min-block-size: initial; min-height: initial; min-inline-size: initial; min-width: initial; mix-blend-mode: initial; object-fit: initial; object-position: initial; object-view-box: initial; offset: initial; opacity: initial; order: initial; orphans: initial; outline: initial; outline-offset: initial; overflow-anchor: initial; overflow-block: initial; overflow-clip-margin: initial; overflow-inline: initial; overflow-wrap: initial; overflow: initial; overlay: initial; overscroll-behavior-block: none; overscroll-behavior-inline: none; overscroll-behavior: none; padding-block: initial; padding: 0px; padding-inline: initial; page: initial; page-orientation: initial; paint-order: initial; perspective: initial; perspective-origin: initial; pointer-events: initial; position-try: initial; position-visibility: initial; print-color-adjust: initial; quotes: initial; r: initial; reading-flow: initial; reading-order: initial; resize: initial; rotate: initial; ruby-align: initial; ruby-position: initial; rx: initial; ry: initial; scale: initial; scroll-behavior: initial; scroll-initial-target: initial; scroll-margin-block: initial; scroll-margin: initial; scroll-margin-inline: initial; scroll-marker-group: initial; scroll-padding-block: initial; scroll-padding: initial; scroll-padding-inline: initial; scroll-snap-align: initial; scroll-snap-stop: initial; scroll-snap-type: initial; scroll-target-group: initial; scroll-timeline: initial; scrollbar-color: initial; scrollbar-gutter: initial; scrollbar-width: initial; shape-image-threshold: initial; shape-margin: initial; shape-outside: initial; shape-rendering: initial; size: initial; speak: initial; stop-color: initial; stop-opacity: initial; stroke: initial; stroke-dasharray: initial; stroke-dashoffset: initial; stroke-linecap: initial; stroke-linejoin: initial; stroke-miterlimit: initial; stroke-opacity: initial; stroke-width: initial; tab-size: initial; table-layout: initial; text-align: left; text-align-last: initial; text-anchor: initial; text-autospace: initial; text-box: initial; text-combine-upright: initial; text-decoration: none; text-decoration-skip-ink: initial; text-emphasis: initial; text-emphasis-position: initial; text-indent: initial; text-justify: initial; text-overflow: initial; text-shadow: initial; text-transform: initial; text-underline-offset: initial; text-underline-position: initial; text-wrap: wrap; timeline-scope: initial; timeline-trigger: initial; touch-action: initial; transform: initial; transform-box: initial; transform-origin: initial; transform-style: initial; transition: initial; translate: initial; trigger-scope: initial; user-select: initial; vector-effect: initial; vertical-align: initial; view-timeline: initial; view-transition-class: initial; view-transition-group: initial; view-transition-name: initial; visibility: initial; border-spacing: initial; -webkit-box-align: initial; -webkit-box-decoration-break: initial; -webkit-box-direction: initial; -webkit-box-flex: initial; -webkit-box-ordinal-group: initial; -webkit-box-orient: initial; -webkit-box-pack: initial; -webkit-box-reflect: initial; -webkit-line-break: initial; -webkit-line-clamp: initial; -webkit-mask-box-image: initial; -webkit-rtl-ordering: initial; -webkit-ruby-position: initial; -webkit-tap-highlight-color: initial; -webkit-text-combine: initial; -webkit-text-decorations-in-effect: initial; -webkit-text-fill-color: initial; -webkit-text-security: initial; -webkit-text-stroke: initial; -webkit-user-drag: initial; white-space-collapse: collapse; widows: initial; width: auto; will-change: initial; word-break: initial; word-spacing: initial; x: initial; y: initial; z-index: initial;"></div></div><div id="goog-gt-tt" class="VIpgJd-yAWNEb-L7lbkb skiptranslate" style="border-radius: 12px; margin: 0 0 0 -23px; padding: 0; font-family: 'Google Sans', Arial, sans-serif;" data-id=""><div id="goog-gt-vt" class="VIpgJd-yAWNEb-hvhgNd"><div class="VIpgJd-yAWNEb-hvhgNd-Ud7fr"><img src="https://fonts.gstatic.com/s/i/productlogos/translate/v14/24px.svg" width="24" height="24" alt=""><div class=" VIpgJd-yAWNEb-hvhgNd-IuizWc-i3jM8c " dir="ltr">原文</div></div><div class="VIpgJd-yAWNEb-hvhgNd-k77Iif"><div id="goog-gt-original-text" class="VIpgJd-yAWNEb-nVMfcd-fmcmS VIpgJd-yAWNEb-hvhgNd-axAV1"></div></div><div class="VIpgJd-yAWNEb-hvhgNd-N7Eqid ltr"><div class="VIpgJd-yAWNEb-hvhgNd-N7Eqid-B7I4Od ltr" dir="ltr"><div class="VIpgJd-yAWNEb-hvhgNd-UTujCb">请对此翻译评分</div><div class="VIpgJd-yAWNEb-hvhgNd-eO9mKe">您的反馈将用于改进谷歌翻译</div></div><div class="VIpgJd-yAWNEb-hvhgNd-xgov5 ltr"><button id="goog-gt-thumbUpButton" type="button" class="VIpgJd-yAWNEb-hvhgNd-bgm6sf" title="翻译质量很棒" aria-label="翻译质量很棒" aria-pressed="false"><span id="goog-gt-thumbUpIcon"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M21 7h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 0S7.08 6.85 7 7H2v13h16c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73V9c0-1.1-.9-2-2-2zM7 18H4V9h3v9zm14-7l-3 7H9V8l4.34-4.34L12 9h9v2z"></path></svg></span><span id="goog-gt-thumbUpIconFilled"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M21 7h-6.31l.95-4.57.03-.32c0-.41-.17-.79-.44-1.06L14.17 0S7.08 6.85 7 7v13h11c.83 0 1.54-.5 1.84-1.22l3.02-7.05c.09-.23.14-.47.14-.73V9c0-1.1-.9-2-2-2zM5 7H1v13h4V7z"></path></svg></span></button><button id="goog-gt-thumbDownButton" type="button" class="VIpgJd-yAWNEb-hvhgNd-bgm6sf" title="翻译质量很差" aria-label="翻译质量很差" aria-pressed="false"><span id="goog-gt-thumbDownIcon"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M3 17h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 24s7.09-6.85 7.17-7h5V4H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2zM17 6h3v9h-3V6zM3 13l3-7h9v10l-4.34 4.34L12 15H3v-2z"></path></svg></span><span id="goog-gt-thumbDownIconFilled"><svg width="24" height="24" viewBox="0 0 24 24" focusable="false" class="VIpgJd-yAWNEb-hvhgNd-THI6Vb NMm5M"><path d="M3 17h6.31l-.95 4.57-.03.32c0 .41.17.79.44 1.06L9.83 24s7.09-6.85 7.17-7V4H6c-.83 0-1.54.5-1.84 1.22l-3.02 7.05c-.09.23-.14.47-.14.73v2c0 1.1.9 2 2 2zm16 0h4V4h-4v13z"></path></svg></span></button></div></div><div id="goog-gt-votingHiddenPane" class="VIpgJd-yAWNEb-hvhgNd-aXYTce"><form id="goog-gt-votingForm" action="//translate.googleapis.com/translate_voting?client=te_lib" method="post" target="votingFrame" class="VIpgJd-yAWNEb-hvhgNd-aXYTce"><input type="text" name="sl" id="goog-gt-votingInputSrcLang"><input type="text" name="tl" id="goog-gt-votingInputTrgLang"><input type="text" name="query" id="goog-gt-votingInputSrcText"><input type="text" name="gtrans" id="goog-gt-votingInputTrgText"><input type="text" name="vote" id="goog-gt-votingInputVote"></form><iframe name="votingFrame" frameborder="0"></iframe></div></div></div><veepn-lock-screen><style>@font-face{font-family:FigtreeVF;src:url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2 supports variations"),url(chrome-extension://majdfhpaihoncoakbjgbdhglocklcgno/fonts/FigtreeVF.woff2) format("woff2-variations");font-weight:100 1000;font-display:swap}</style></veepn-lock-screen></body></html>     
